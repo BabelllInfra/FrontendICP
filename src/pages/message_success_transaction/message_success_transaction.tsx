@@ -10,6 +10,7 @@ import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Navbar from "../../components/navbar";
+import toast, { Toaster } from "react-hot-toast";
 
 const MessageWarningTransaction = () => {
   const navigate = useNavigate();
@@ -36,11 +37,16 @@ const MessageWarningTransaction = () => {
 
   //=============  INIT ============= 
   const onSubmit = () => {
+    toast.success('CORREO ENVIADO EXITOSAMENTE')
     navigate(routesNamesApp.newTransaction);
   }
 
   return (
     <div className="bg-globalWhite relative h-screen w-screen overflow-auto">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <Navbar></Navbar>
       <div className=" h-full flex w-full flex-col items-center justify-start">
         <div className="w-full px-10 lg:w-2/6">
