@@ -31,6 +31,10 @@ const NewTransactionPage = () => {
   //=============  INIT ============= 
 
 
+  const onSubmit = () => {
+    
+  }
+
 
 
   return (
@@ -48,46 +52,50 @@ const NewTransactionPage = () => {
           <p className="font-bold">Recibes</p>
         </div>
         <div className="w-full">
-          <form action="">
-            <input className="inputNumber text-end" placeholder='0.0' type="number" {...register('amount',
-              {
-                required: {
-                  value: true,
-                  message: "Ingresa un monto valido"
-                },
-                validate: (value) => {
-                  const pattern1 = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).*$/;
-                  const pattern2 = /^[^\s]+$/;
-                  if (!value.match(pattern2)) {
-                    return 'La contraseña no puede contener espacios';
-                  }
-                  if (!value.match(pattern1)) {
-                    return 'La contraseña debe contener min una letra mayúscula [A-Z], un número [ 0-9] y un simbolo [!@#$%^&*()_-]';
-                  }
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="w-full">
 
-                  return true;
-                },
-              })} />
-            {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
+              <input className="inputNumber text-end" placeholder='0.0' type="number" {...register('amount',
+                {
+                  required: {
+                    value: true,
+                    message: "Ingresa un monto valido"
+                  },
+                  validate: (value) => {
+                    // const pattern1 = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).*$/;
+                    // const pattern2 = /^[^\s]+$/;
+                    // if (!value.match(pattern2)) {
+                    //   return 'La contraseña no puede contener espacios';
+                    // }
+                    // if (!value.match(pattern1)) {
+                    //   return 'La contraseña debe contener min una letra mayúscula [A-Z], un número [ 0-9] y un simbolo [!@#$%^&*()_-]';
+                    // }
+
+                    return true;
+                  },
+                })} />
+              {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
+
+            </div>
+
+            <div className="w-full flex flex-row justify-between mt-4">
+              <p className="font-bold">Criptomoneda o Token: </p>
+              <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
+                <p className="font-bold">bitcoin</p>
+              </div>
+            </div>
+            <div className="w-full flex flex-row justify-between mt-4" >
+              <p className="font-bold">Red: </p>
+              <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
+                <p className="font-bold">ckbitcoin</p>
+              </div>
+            </div>
+            <div className="w-full flex flex-row justify-end mt-4 mb-10" >
+              <p className="text-grayBold mx-4"> Comisión:  {'response.comision'}</p>
+            </div>
+            <ButtonPrimary type="button" name="Generar código QR" status={statusbutton} onClick={() => { }} />
           </form>
         </div>
-
-        <div className="w-full flex flex-row justify-between mt-4">
-          <p className="font-bold">Criptomoneda o Token: </p>
-          <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-            <p className="font-bold">bitcoin</p>
-          </div>
-        </div>
-        <div className="w-full flex flex-row justify-between mt-4" >
-          <p className="font-bold">Red: </p>
-          <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-            <p className="font-bold">ckbitcoin</p>
-          </div>
-        </div>
-        <div className="w-full flex flex-row justify-end mt-4 mb-10" >
-          <p className="text-grayBold mx-4"> Comisión:  {'response.comision'}</p>
-        </div>
-        <ButtonPrimary type="button" name="Generar código QR" status={statusbutton} onClick={() => { }} />
       </div>
     </>
 
