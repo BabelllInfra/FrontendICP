@@ -22,7 +22,7 @@
     @apply text-xl  text-globalWhite text-justify my-5 px-5;
   }
   .labelTxt{
-    @apply text-sm font-bold text-black text-start;
+    @apply text-sm font-bold text-black text-start mb-2;
   }
   .sectionTxt{
     @apply  text-base font-bold text-black;
@@ -57,6 +57,10 @@
   .textButton
   {
     @apply  font-bold text-purple text-sm;
+  }
+  .textButtonBlack
+  {
+    @apply font-bold text-black text-sm underline cursor-pointer;
   }
   .menuButton{
     @apply w-full p-8 my-4 bg-splash hover:bg-purple focus:bg-purple active:bg-purple text-globalWhite font-medium text-2xl;

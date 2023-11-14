@@ -4,7 +4,7 @@ import wallet from "../../assets/images/wallet_bitcoin.webp";
 import { CloseButton } from "../../components/closebutton";
 import ButtonPrimary from "../../components/buttonPrimary";
 import StatusButton from "../../models/button_status_enum";
-import { routesNamesApp } from "../../routes/routes";
+import { routesNames, routesNamesApp } from "../../routes/routes";
 import { useForm } from "react-hook-form";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ const MessageWarningTransaction = () => {
 
   //=============  INIT ============= 
   const onSubmit = () => {
-
+    navigate(routesNamesApp.newTransaction);
   }
 
   return (
@@ -48,9 +48,9 @@ const MessageWarningTransaction = () => {
             ¡Transacción
             exitosa!
           </h1>
-          <img src={wallet} className=" ml-auto mr-auto mb-20"></img>
+          <img src={wallet} className=" ml-auto mr-auto mb-20 h-[300px]"></img>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-full">
+            <div className="w-full flex flex-col justify-start">
               <label htmlFor="email" className="labelTxt text-start">Enviar comprobante por email:</label>
               <input className="inputNumber" placeholder='Nombre' type="email" {...register('email',
                 {
@@ -66,8 +66,8 @@ const MessageWarningTransaction = () => {
               {errors.email && <span className="errorTxt">{errors.email.message}</span>}
 
             </div>
-            <ButtonPrimary type="submit" name="Enviar" status={StatusButton.Enabled} onClick={() => navigate(routesNamesApp.qrTransaction)} />
-            <span className="text-button">Omitir</span>
+            <ButtonPrimary type="submit" name="Enviar" status={StatusButton.Enabled} onClick={()=>{}}/>
+            <a className="textButtonBlack" onClick={()=>navigate(routesNamesApp.newTransaction)}>Omitir</a>
           </form>
         </div>
       </div>
