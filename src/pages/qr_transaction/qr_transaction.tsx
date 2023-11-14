@@ -5,7 +5,7 @@ import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { routesNamesApp } from "../../routes/routes";
+import { routesNames } from "../../routes/routes";
 
 const QrTransactionPage = () => {
   //=============  REACT FORM ============= 
@@ -49,7 +49,7 @@ const QrTransactionPage = () => {
 
 
   const onSubmit = () => {
-    navigate(routesNamesApp.messageWarningTransaction)
+    navigate(routesNames.messageSuccessTransaction)
   }
 
 

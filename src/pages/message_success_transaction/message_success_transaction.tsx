@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import wallet from "../../assets/images/wallet_bitcoin.webp";
 
-import { CloseButton } from "../../components/closebutton";
 import ButtonPrimary from "../../components/buttonPrimary";
 import StatusButton from "../../models/button_status_enum";
-import { routesNames, routesNamesApp } from "../../routes/routes";
+import { routesNamesApp } from "../../routes/routes";
 import { useForm } from "react-hook-form";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
