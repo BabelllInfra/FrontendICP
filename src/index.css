@@ -80,7 +80,7 @@
     @apply  float-right w-2/3 rounded-md border-purple box-border border font-bold text-black text-sm focus:outline-none focus:border-purple focus:ring-1 focus:ring-purple;
   }
   .inputNumber{
-    @apply w-full rounded-md border-purple focus:outline-none focus:border-purple box-border border focus:ring-1 focus:ring-purple my-0 ;
+    @apply w-full rounded-lg border-purple focus:outline-none focus:border-purple box-border border focus:ring-1 focus:ring-purple my-0 ;
   }
   .inputNumberError{
     @apply w-full rounded-md border-error focus:outline-none focus:border-error box-border border focus:ring-1 focus:ring-error my-2 ;
