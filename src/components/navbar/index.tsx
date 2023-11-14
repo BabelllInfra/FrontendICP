@@ -2,7 +2,7 @@
 // import { useSelector } from "react-redux";
 import logo from "../../assets/images/SwaphixLogo.png";
 import { useNavigate } from "react-router-dom";
-import { routesNames } from "../../routes/routes_names";
+import { routesNames } from "../../routes/routes";
 
 const Navbar = () => {
   // const main = useSelector((state: { main: MainState }) => state.main);

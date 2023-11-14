@@ -22,7 +22,7 @@
     @apply text-xl  text-globalWhite text-justify my-5 px-5;
   }
   .labelTxt{
-    @apply text-sm  font-bold text-black;
+    @apply text-sm font-bold text-black text-start;
   }
   .sectionTxt{
     @apply  text-base font-bold text-black;

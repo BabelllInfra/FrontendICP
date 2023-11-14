@@ -4,20 +4,23 @@ import { useState, useEffect } from "react";
 import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { routesNames } from "../../routes/routes";
 
 /* eslint-disable no-case-declarations */
 const NewTransactionPage = () => {
   //=============  REACT FORM ============= 
   type FormValues = {
-    amount: string,
+    amount: number,
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>()
+  const { register, handleSubmit, formState: { errors }, watch, setError } = useForm<FormValues>()
+  const amountWatched = watch('amount');
 
   //=============  REACT FORM ============= 
-  const [statusbutton, setStatusButton] = useState(StatusButton.Enabled);
+  const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   //=============  INIT ============= 
   const init = async () => {
     dispatch(ChangeIsBack({
@@ -27,12 +30,27 @@ const NewTransactionPage = () => {
   useEffect(() => {
     init();
     // repeat();
-  }, []);
+  });
+
+  useEffect(() => {
+    console.log('Valor del campo cambiado:', amountWatched);
+    if(amountWatched != undefined){
+      if(amountWatched === 0) {
+        console.log('Amount')
+        setError('amount', { type: 'manual', message: 'El monto debe ser mayor a 0' })
+        return
+      }
+      return
+    }
+    setError('amount', { type: 'manual', message: '' })
+    setStatusButton(StatusButton.Enabled)
+
+  }, [amountWatched]);
   //=============  INIT ============= 
 
 
   const onSubmit = () => {
-    
+    navigate(routesNames.messageWarningTransaction)
   }
 
 
@@ -61,18 +79,6 @@ const NewTransactionPage = () => {
                     value: true,
                     message: "Ingresa un monto valido"
                   },
-                  validate: (value) => {
-                    // const pattern1 = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d\s]).*$/;
-                    // const pattern2 = /^[^\s]+$/;
-                    // if (!value.match(pattern2)) {
-                    //   return 'La contraseña no puede contener espacios';
-                    // }
-                    // if (!value.match(pattern1)) {
-                    //   return 'La contraseña debe contener min una letra mayúscula [A-Z], un número [ 0-9] y un simbolo [!@#$%^&*()_-]';
-                    // }
-
-                    return true;
-                  },
                 })} />
               {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
 
@@ -93,7 +99,7 @@ const NewTransactionPage = () => {
             <div className="w-full flex flex-row justify-end mt-4 mb-10" >
               <p className="text-grayBold mx-4"> Comisión:  {'response.comision'}</p>
             </div>
-            <ButtonPrimary type="button" name="Generar código QR" status={statusbutton} onClick={() => { }} />
+            <ButtonPrimary type="submit" name="Generar código QR" status={statusbutton} onClick={() => { }} />
           </form>
         </div>
       </div>
