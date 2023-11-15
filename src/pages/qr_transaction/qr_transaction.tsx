@@ -65,7 +65,7 @@ const QrTransactionPage = () => {
   useEffect(() => {
     init();
     // repeat();
-  }, [execute]);
+  }, []);
 
   //=============  INIT ============= 
 
