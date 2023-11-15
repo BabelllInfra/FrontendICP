@@ -10,6 +10,7 @@ import TransactionService from "../../services/transaction_service";
 import iconBtc from "../../assets/images/ckBTC-token.png";
 import useErrorHandling from "../../hooks/useError";
 import toast from "react-hot-toast";
+import { routesNames } from "../../routes/routes";
 
 const QrTransactionPage = () => {
   const [qrGen, setQr] = useState<string>();
@@ -41,6 +42,8 @@ const QrTransactionPage = () => {
       setQr(fullImage + response.imgBase64?.toString());
       const convert = new ConvertModel('ckBTC', 'ICP', dataObject?.montoPesos, dataObject.totalMostrar, dataObject.comision)
       setConvert(convert)
+      await TransactionService.newTransaction();
+      navigate(routesNames.messageSuccessTransaction)
     }
     catch(e){
       handleErrors(e)
