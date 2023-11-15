@@ -5,8 +5,14 @@ import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { routesNames } from "../../routes/routes";
+import { routesNames, routesNamesApp } from "../../routes/routes";
 import iconBtc from "../../assets/images/ckBTC-token.png";
+import { ConvertModel } from "../../models/convert_model";
+import TransactionService from "../../services/transaction_service";
+import { RequestInitialConvertionModel } from "../../models/request_initial_convertion_model";
+import useErrorHandling from "../../hooks/useError";
+import toast from "react-hot-toast";
+import { lsConversionData } from "../../common/constants/constants";
 
 /* eslint-disable no-case-declarations */
 const NewTransactionPage = () => {
@@ -15,10 +21,13 @@ const NewTransactionPage = () => {
     amount: number,
   }
 
-  const { register, handleSubmit, formState: { errors }, watch, setError } = useForm<FormValues>()
+  const { register, handleSubmit, formState: { errors }, watch, setError, getValues } = useForm<FormValues>()
   const amountWatched = watch('amount');
 
   //=============  REACT FORM ============= 
+  const { errorMessage, handleErrors, clearErrorMessage } = useErrorHandling()
+  const [convert, setConvert] =  useState(new ConvertModel('XRP', 'XRP', '0.0', '', ''));
+
   const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -37,21 +46,59 @@ const NewTransactionPage = () => {
     console.log('Valor del campo cambiado:', amountWatched);
     if (amountWatched != undefined) {
       if (amountWatched <= 0) {
-        console.log('Amount')
         setError('amount', { type: 'manual', message: 'El monto debe ser mayor a 0' })
         return
       }
-      return
+      if (amountWatched <= 199) {
+        setError('amount', { type: 'manual', message: 'El monto minimo es de 200.0' })
+        return
+      }
     }
     setError('amount', { type: 'manual', message: '' })
-    setStatusButton(StatusButton.Enabled)
+    getConvertion()
 
   }, [amountWatched]);
+
+  const getConvertion = async () =>{
+    try{
+      setStatusButton(StatusButton.Loading)
+      const value =parseInt(getValues('amount').toString()); 
+      const request = new RequestInitialConvertionModel(convert.from_currency, convert.network, value);
+      const response = await TransactionService.initialConvertion(request);
+      setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
+      const objectData = JSON.stringify(response);
+      localStorage.setItem(lsConversionData, objectData);
+      setStatusButton(StatusButton.Enabled)
+
+    }catch(e){
+      setStatusButton(StatusButton.Enabled)
+      handleErrors(e)
+    }
+  }
   //=============  INIT ============= 
+  useEffect(() => {
+    if (errorMessage !== '') {
+      toast.error(errorMessage)
+      clearErrorMessage()
+    }
+  }, [errorMessage])
 
+  const onSubmit = async () => {
+    try{
+      setStatusButton(StatusButton.Loading)
+      const value =parseInt(getValues('amount').toString()); 
+      const request = new RequestInitialConvertionModel(convert.from_currency, convert.network, value);
+      const response = await TransactionService.initialConvertion(request);
+      setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
+      const objectData = JSON.stringify(response);
+      localStorage.setItem(lsConversionData, objectData);
+      navigate(routesNamesApp.qrTransaction)
+      setStatusButton(StatusButton.Enabled)
 
-  const onSubmit = () => {
-    navigate(routesNames.messageWarningTransaction)
+    }catch(e){
+      setStatusButton(StatusButton.Enabled)
+      handleErrors(e)
+    }
   }
 
 
