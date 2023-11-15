@@ -81,7 +81,7 @@ const NewTransactionPage = () => {
                     message: "Ingresa un monto valido"
                   },
                 })} />
-              {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
+              {errors.amount && <span className="errorTxt w-full text-start">{errors.amount.message}</span>}
 
             </div>
 
