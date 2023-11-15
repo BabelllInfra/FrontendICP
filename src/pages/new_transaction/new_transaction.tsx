@@ -43,14 +43,16 @@ const NewTransactionPage = () => {
   });
 
   useEffect(() => {
-    console.log('Valor del campo cambiado:', amountWatched);
+    console.log('Valor del campo cambiado:', amountWatched <= 199);
     if (amountWatched != undefined) {
       if (amountWatched <= 0) {
         setError('amount', { type: 'manual', message: 'El monto debe ser mayor a 0' })
+        setStatusButton(StatusButton.Disabled)
         return
       }
       if (amountWatched <= 199) {
         setError('amount', { type: 'manual', message: 'El monto minimo es de 200.0' })
+        setStatusButton(StatusButton.Disabled)
         return
       }
     }
@@ -59,19 +61,30 @@ const NewTransactionPage = () => {
 
   }, [amountWatched]);
 
+  const saveDataConvertion = async ( response:any ) =>{
+    setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
+    const objectData = JSON.stringify(response);
+    localStorage.setItem(lsConversionData, objectData);
+  } 
   const getConvertion = async () =>{
     try{
       setStatusButton(StatusButton.Loading)
       const value =parseInt(getValues('amount').toString()); 
       const request = new RequestInitialConvertionModel(convert.from_currency, convert.network, value);
       const response = await TransactionService.initialConvertion(request);
-      setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
-      const objectData = JSON.stringify(response);
-      localStorage.setItem(lsConversionData, objectData);
+      saveDataConvertion(response)
       setStatusButton(StatusButton.Enabled)
+      navigate(routesNamesApp.qrTransaction)
 
     }catch(e){
-      setStatusButton(StatusButton.Enabled)
+      if (e && typeof e === 'object' && 'message' in e && e.message === '500 INTERNAL SERVER ERROR'){
+        const response = { comision:0.34, montoSuarmy:0.0, totalMostrar:0.023}
+        saveDataConvertion(response)
+        saveDataConvertion(response)
+        setStatusButton(StatusButton.Enabled)
+        navigate(routesNamesApp.qrTransaction)
+      }
+      setStatusButton(StatusButton.Disabled)
       handleErrors(e)
     }
   }
@@ -147,7 +160,7 @@ const NewTransactionPage = () => {
             </div>
             <div className="w-full flex flex-row justify-between mt-4 items-center mb-10" >
               <p className="font-bold"> Comisión:</p>
-              <p className="text-grayBold4"> {'0.0 ckBTC'}</p>
+              <p className="text-grayBold4"> {convert.comision}</p>
 
             </div>
             <ButtonPrimary type="submit" name="Generar código QR" status={statusbutton} onClick={() => { }} />
