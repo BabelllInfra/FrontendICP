@@ -5,6 +5,7 @@ import BackArrow from "../../components/backArrow/index.tsx";
 import { useSelector } from "react-redux";
 import { MainState } from '../../redux/mainSlice.ts';
 import Navbar from "../../components/navbar/index.tsx";
+import SideNavCustom from "../../components/sideNav/index.tsx";
 
 
 const LayoutApp = () => {
@@ -13,6 +14,7 @@ const LayoutApp = () => {
   return (
     
     <div className=" flex flex-col sm:overflow-auto w-screen h-screen items-center justify-start sm:justify-center">
+      <SideNavCustom></SideNavCustom>
       <Navbar></Navbar>
       <Toaster
         position="top-center"
