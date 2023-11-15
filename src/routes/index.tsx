@@ -7,6 +7,7 @@ import QrTransactionPage from '../pages/qr_transaction/qr_transaction';
 import MessageWarningTransaction from '../pages/message_transaction/message_transaction';
 import MessageSuccessTransaction from '../pages/message_success_transaction/message_success_transaction';
 import NewTransactioCryptoPage from '../pages/new_transaction_crypto/new_transaction_crypto';
+import MessageSuccessSendCrypto from '../pages/message_success_crypto/message_success_crypto';
 
 const routesApp = [
   {
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
     path: routesNames.messageSuccessTransaction,
     element: <MessageSuccessTransaction />,
   },
+  {
+    path: routesNames.messageSuccessSendCrypto,
+    element: <MessageSuccessSendCrypto />,
+  },
+
+  
 ])
 
 export default router;

@@ -42,7 +42,7 @@ const NewTransactioCryptoPage = () => {
   useEffect(() => {
     console.log('Valor del campo cambiado:', amountWatched);
     if (amountWatched != undefined) {
-      if (amountWatched === 0) {
+      if (amountWatched <= 0) {
         console.log('Amount')
         setError('amount', { type: 'manual', message: 'El monto debe ser mayor a 0' })
         return
@@ -57,7 +57,7 @@ const NewTransactioCryptoPage = () => {
 
 
   const onSubmit = () => {
-    navigate(routesNames.messageWarningTransaction)
+    navigate(routesNames.messageSuccessSendCrypto)
   }
 
 
