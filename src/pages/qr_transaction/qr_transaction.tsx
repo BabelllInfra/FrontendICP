@@ -19,7 +19,7 @@ const QrTransactionPage = () => {
 
   const [progressPorcentage, setProgressPorcentage] = useState(0);
   const operation = 100 / 30;
-  const [statusRequestInterval, setRequestInterva] = useState(false);
+  const [statusRequestInterval, setRequestInterval] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate()
   //=============  INIT ============= 

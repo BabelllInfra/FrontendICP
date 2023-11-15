@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import instance from "./base"
+import instance, { instanceICP } from "./base"
 import { RequestInitialConvertionModel } from "../models/request_initial_convertion_model"
 
 const initialConvertion = async ( request:RequestInitialConvertionModel ) => {
@@ -42,7 +42,7 @@ const getQrBase64 = async ( request:string ) => {
 
 const newTransaction = async () => {
   try {
-    const response = await instance.get(`/transaccion/`)
+    const response = await instanceICP.get(`/transaccion/`)
     return response.data
   } catch (e) {
     if (e instanceof AxiosError) {
