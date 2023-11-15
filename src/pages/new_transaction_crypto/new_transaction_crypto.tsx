@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { routesNames } from "../../routes/routes";
 import iconBtc  from "../../assets/images/ckBTC-token.png";
-import { walletTo } from "../../common/constants/constants";
+import { walletFrom, walletTo } from "../../common/constants/constants";
+import TransactionService from "../../services/transaction_service";
 
 
 /* eslint-disable no-case-declarations */
@@ -33,6 +34,11 @@ const NewTransactioCryptoPage = () => {
       isBack: true,
     }))
     setValue('wallet', walletTo)
+    const response = await TransactionService.getBalance(walletFrom)
+    console.log(response)
+    if(response.status === 200 ){
+      setValue('amount', response.data.balance)
+    }
   }
   useEffect(() => {
     init();
