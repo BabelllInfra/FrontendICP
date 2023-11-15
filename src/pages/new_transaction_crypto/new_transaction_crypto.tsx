@@ -9,6 +9,8 @@ import { routesNames } from "../../routes/routes";
 import iconBtc  from "../../assets/images/ckBTC-token.png";
 import { walletFrom, walletTo } from "../../common/constants/constants";
 import TransactionService from "../../services/transaction_service";
+import useErrorHandling from "../../hooks/useError";
+import toast from "react-hot-toast";
 
 
 /* eslint-disable no-case-declarations */
@@ -19,6 +21,7 @@ const NewTransactioCryptoPage = () => {
     wallet: string,
 
   }
+  const { errorMessage, handleErrors, clearErrorMessage } = useErrorHandling()
 
   const { register, handleSubmit, formState: { errors }, watch, setError, setValue } = useForm<FormValues>()
   const amountWatched = watch('amount');
@@ -65,20 +68,36 @@ const NewTransactioCryptoPage = () => {
       setExecute(true)
       console.log(response)
       if(response.status === 200 ){
-        setValue('amount', response.data.balance)
+        setValue('amount', response.data.Balance)
       }
     }
   }
 
   const onSubmit = async () => {
-    console.log('============== START TRANSACTION ============== ')
-    const response = await TransactionService.newTransaction();
-    console.log('============== START TRANSACTION RESPONSE ==============: ' +response.status)
-    if(response.status === 200){
-      navigate(routesNames.messageSuccessSendCrypto)
+    try{
+      setStatusButton(StatusButton.Loading)
+      console.log('============== START TRANSACTION ============== ')
+      const response = await TransactionService.newTransaction();
+      console.log('============== START TRANSACTION RESPONSE ==============: ' +response.status)
+      if(response.status === 200){
+        navigate(routesNames.messageSuccessSendCrypto)
+      }
+      setStatusButton(StatusButton.Enabled)
+  
+    }
+    catch(e){
+      setStatusButton(StatusButton.Enabled)
+      handleErrors(e)
+      console.error(e)
     }
   }
 
+  useEffect(() => {
+    if (errorMessage !== '') {
+      toast.error(errorMessage)
+      clearErrorMessage()
+    }
+  }, [errorMessage])
 
 
   return (

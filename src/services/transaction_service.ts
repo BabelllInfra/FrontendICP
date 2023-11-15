@@ -61,6 +61,7 @@ const newTransaction = async () => {
 
 const getBalance = async ( wallet:string ) => {
   try {
+    console.log(wallet)
     const response = await instanceICP.get(`/balance/`)
     return response
   } catch (e) {
