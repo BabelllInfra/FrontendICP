@@ -21,9 +21,27 @@ const initialConvertion = async ( request:RequestInitialConvertionModel ) => {
   }
 }
 
-
+const getQrBase64 = async ( request:string ) => {
+  try {
+    const response = await instance.post(`/qrgenerator/`,{ cuenta: request })
+    return response.data
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      let message = e.toString()
+      if(e.response){
+        message =`${e.response.status} ${e.response.statusText}`
+      }
+      throw new Error(message)
+    }
+    if(e){
+      throw new Error(`Sucedio algo inesperado ${e.toString()}`);
+    }
+    throw new Error('Sucedio algo inesperado');
+  }
+}
 const TransactionService = {
   initialConvertion,
+  getQrBase64
 }
 
 export default TransactionService

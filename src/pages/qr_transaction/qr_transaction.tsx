@@ -1,106 +1,104 @@
-import { useForm } from "react-hook-form";
-import ButtonPrimary from "../../components/buttonPrimary";
 import { useState, useEffect } from "react";
-import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { routesNames } from "../../routes/routes";
+import { lsConversionData, walletFrom } from "../../common/constants/constants";
+import { ConvertModel } from "../../models/convert_model";
+import logoAnimated from "../../assets/animations/swaphix_logo_animated.gif";
+import ProgressBar from "../../components/progressBar";
+import TransactionService from "../../services/transaction_service";
+import iconBtc from "../../assets/images/ckBTC-token.png";
+import useErrorHandling from "../../hooks/useError";
+import toast from "react-hot-toast";
 
 const QrTransactionPage = () => {
-  //=============  REACT FORM ============= 
-  type FormValues = {
-    amount: number,
-  }
+  const [qrGen, setQr] = useState<string>();
+  const { errorMessage, handleErrors, clearErrorMessage } = useErrorHandling()
+  const [convert, setConvert] = useState(new ConvertModel('ckBTC', 'ICP', '0.0', '', ''));
 
-  const { register, handleSubmit, formState: { errors }, watch, setError } = useForm<FormValues>()
-  const amountWatched = watch('amount');
-
-  //=============  REACT FORM ============= 
-  const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
+  const [progressPorcentage, setProgressPorcentage] = useState(0);
+  const operation = 100 / 30;
+  const [statusRequestInterval, setRequestInterva] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate()
   //=============  INIT ============= 
+  useEffect(() => {
+    if (errorMessage !== '') {
+      toast.error(errorMessage)
+      clearErrorMessage()
+    }
+  }, [errorMessage])
+
   const init = async () => {
     dispatch(ChangeIsBack({
       isBack: false,
     }))
+    try{
+      const data = localStorage.getItem(lsConversionData) ?? ''
+      const dataObject = JSON.parse(data);
+      const response = await TransactionService.getQrBase64(walletFrom);
+      const fullImage = 'data:image/png;base64,'
+      setQr(fullImage + response.imgBase64?.toString());
+      const convert = new ConvertModel('ckBTC', 'ICP', dataObject?.montoPesos, dataObject.totalMostrar, dataObject.comision)
+      setConvert(convert)
+    }
+    catch(e){
+      handleErrors(e)
+    }
+    
   }
   useEffect(() => {
     init();
     // repeat();
   }, []);
 
-  useEffect(() => {
-    console.log('Valor del campo cambiado:', amountWatched);
-    if(amountWatched != undefined){
-      if(amountWatched === 0) {
-        console.log('Amount')
-        setError('amount', { type: 'manual', message: 'El monto debe ser mayor a 0' })
-        return
-      }
-      return
-    }
-    setError('amount', { type: 'manual', message: '' })
-    setStatusButton(StatusButton.Enabled)
-
-  }, [amountWatched]);
   //=============  INIT ============= 
 
 
-  const onSubmit = () => {
-    navigate(routesNames.messageSuccessTransaction)
-  }
+  const intervalTime = setInterval(function () {
+    progressPorcentage
+    // Código a ejecutar en cada intervalo
+    let calculate = progressPorcentage + operation
+    console.log(calculate);
 
+    if (calculate > 100) {
+      calculate = 0.0;
+      //     sendRequestTransaction();
+    }
+    setProgressPorcentage(calculate)
+
+    if (statusRequestInterval === true) {
+      console.log('FROM REPEAT')
+    } else {
+      clearInterval(intervalTime);
+    }
+  }, 1000);
 
 
   return (
     <>
-      <div className="my-0 mb-20">
-        <h4 className="titleTxt text-lg">
-          Hola,{'user'}
-        </h4>
+      <div className="my-0 mb-5">
         <h1 className="titleTxt">
-          Nueva Transacción
+          Estas Enviando
         </h1>
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-full flex flex-row  items-center justify-between justify-self-center mt-6">
-          <p className="font-bold">Recibes</p>
+      <div className="mx-5 flex flex-col items-center justify-center m-0">
+
+        <div className="detailBox-active-account detailBox w-full flex flex-row mt-0 items-center">
+          <div className="flex flex-col gap-2 pl-7 w-full justify-center">
+            <div className="flex flex-row items-center justify-center">
+              <p className="labelTxt text-5xl text-grayBold mr-3">{convert.totalMostrar}</p>
+              <img src={iconBtc} alt="bitcoin" className="w-[25px] h-[25px] mr-2" />
+              <p className="labelTxt font-normal">{convert.from_currency}</p>
+            </div>
+            <p className="mt-5 font-semi-bold">No cierres la pantalla hasta que la operación se haya completado…</p>
+          </div>
         </div>
-        <div className="w-full">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-full">
+        <img src={logoAnimated} className="w-20 h-20 mt-5" />
 
-              <input className="inputNumber text-end" placeholder='0.0' type="number" {...register('amount',
-                {
-                  required: {
-                    value: true,
-                    message: "Ingresa un monto valido"
-                  },
-                })} />
-              {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
+        <img src={qrGen} className="w-[255px] h-[255px] mt-5" />
+        <ProgressBar  progress={progressPorcentage} />
 
-            </div>
-
-            <div className="w-full flex flex-row justify-between mt-4">
-              <p className="font-bold">Criptomoneda o Token: </p>
-              <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-                <p className="font-bold">bitcoin</p>
-              </div>
-            </div>
-            <div className="w-full flex flex-row justify-between mt-4" >
-              <p className="font-bold">Red: </p>
-              <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-                <p className="font-bold">ckbitcoin</p>
-              </div>
-            </div>
-            <div className="w-full flex flex-row justify-end mt-4 mb-10" >
-              <p className="text-grayBold mx-4"> Comisión:  {'response.comision'}</p>
-            </div>
-            <ButtonPrimary type="submit" name="Generar código QR" status={statusbutton} onClick={() => { }} />
-          </form>
-        </div>
       </div>
     </>
 

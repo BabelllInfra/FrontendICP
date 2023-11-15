@@ -6,7 +6,7 @@ import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { routesNames, routesNamesApp } from "../../routes/routes";
+import { routesNamesApp } from "../../routes/routes";
 import iconBtc from "../../assets/images/ckBTC-token.png";
 import { ConvertModel } from "../../models/convert_model";
 import TransactionService from "../../services/transaction_service";
