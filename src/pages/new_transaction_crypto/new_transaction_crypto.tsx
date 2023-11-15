@@ -87,6 +87,7 @@ const NewTransactioCryptoPage = () => {
               <p className="font-bold">ICP</p>
             </div>
           </div>
+          
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="w-full">
               <div className="relative">
