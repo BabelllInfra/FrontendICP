@@ -6,6 +6,7 @@ import LayoutApp from '../pages/layout';
 import QrTransactionPage from '../pages/qr_transaction/qr_transaction';
 import MessageWarningTransaction from '../pages/message_transaction/message_transaction';
 import MessageSuccessTransaction from '../pages/message_success_transaction/message_success_transaction';
+import NewTransactioCryptoPage from '../pages/new_transaction_crypto/new_transaction_crypto';
 
 const routesApp = [
   {
@@ -15,6 +16,10 @@ const routesApp = [
   {
     path: routesNamesApp.qrTransaction,
     element: <QrTransactionPage/>
+  },
+  {
+    path: routesNamesApp.newTransactionCrypto,
+    element: <NewTransactioCryptoPage />,
   },
 ]
 

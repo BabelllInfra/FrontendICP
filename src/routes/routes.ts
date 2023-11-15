@@ -8,4 +8,6 @@ export const routesNames = {
 export const routesNamesApp = {
   newTransaction: '/',
   qrTransaction: '/qr/',
+  newTransactionCrypto: '/send-crypto/',
+
 }
