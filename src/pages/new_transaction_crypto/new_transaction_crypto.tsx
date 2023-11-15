@@ -28,22 +28,20 @@ const NewTransactioCryptoPage = () => {
   const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const [execute, setExecute] = useState(false);
+
   //=============  INIT ============= 
   const init = async () => {
     dispatch(ChangeIsBack({
       isBack: true,
     }))
     setValue('wallet', walletTo)
-    const response = await TransactionService.getBalance(walletFrom)
-    console.log(response)
-    if(response.status === 200 ){
-      setValue('amount', response.data.balance)
-    }
+    getBalance();
   }
   useEffect(() => {
     init();
     // repeat();
-  });
+  }, []);
 
   useEffect(() => {
     console.log('Valor del campo cambiado:', amountWatched);
@@ -61,9 +59,24 @@ const NewTransactioCryptoPage = () => {
   }, [amountWatched]);
   //=============  INIT ============= 
 
+  const getBalance = async () =>{
+    if(execute===false){
+      const response = await TransactionService.getBalance(walletFrom)
+      setExecute(true)
+      console.log(response)
+      if(response.status === 200 ){
+        setValue('amount', response.data.balance)
+      }
+    }
+  }
 
-  const onSubmit = () => {
-    navigate(routesNames.messageSuccessSendCrypto)
+  const onSubmit = async () => {
+    console.log('============== START TRANSACTION ============== ')
+    const response = await TransactionService.newTransaction();
+    console.log('============== START TRANSACTION RESPONSE ==============: ' +response.status)
+    if(response.status === 200){
+      navigate(routesNames.messageSuccessSendCrypto)
+    }
   }
 
 
@@ -105,7 +118,7 @@ const NewTransactioCryptoPage = () => {
                     },
                   })} />
                 {errors.amount && <span className="errorTxt">{errors.amount.message}</span>}
-                <span className='cursor-pointer absolute left-1 top-2 bottom-0 text-purple font-bold mr-20'>MAX</span>
+                <span onClick={()=>getBalance()} className='cursor-pointer absolute left-1 top-2 bottom-0 text-purple font-bold mr-20'>MAX</span>
               </div>
             </div>
             <div className="w-full flex flex-row justify-end mt-1 mb-5" >
