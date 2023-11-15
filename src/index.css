@@ -86,6 +86,9 @@
   .inputNumber{
     @apply w-full rounded-lg border-purple focus:outline-none focus:border-purple box-border border focus:ring-1 focus:ring-purple my-0 ;
   }
+  .inputTextArea{
+    @apply w-full rounded-lg border-black focus:outline-none focus:border-purple box-border border focus:ring-1 focus:ring-purple my-0 min-h-full px-4;
+  }
   .inputNumberError{
     @apply w-full rounded-md border-error focus:outline-none focus:border-error box-border border focus:ring-1 focus:ring-error my-2 ;
   }

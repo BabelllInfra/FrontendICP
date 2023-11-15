@@ -6,16 +6,22 @@ import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { routesNames } from "../../routes/routes";
+import iconBtc  from "../../assets/images/ckBTC-token.png";
+import { walletTo } from "../../common/constants/constants";
+
 
 /* eslint-disable no-case-declarations */
 const NewTransactioCryptoPage = () => {
   //=============  REACT FORM ============= 
   type FormValues = {
     amount: number,
+    wallet: string,
+
   }
 
-  const { register, handleSubmit, formState: { errors }, watch, setError } = useForm<FormValues>()
+  const { register, handleSubmit, formState: { errors }, watch, setError, setValue } = useForm<FormValues>()
   const amountWatched = watch('amount');
+
 
   //=============  REACT FORM ============= 
   const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
@@ -26,6 +32,7 @@ const NewTransactioCryptoPage = () => {
     dispatch(ChangeIsBack({
       isBack: true,
     }))
+    setValue('wallet', walletTo)
   }
   useEffect(() => {
     init();
@@ -57,7 +64,7 @@ const NewTransactioCryptoPage = () => {
 
   return (
     <>
-      <div className="my-0 mb-20">
+      <div className="my-0 mb-8">
         <h4 className="titleTxt text-lg">
           Hola,{'user'}
         </h4>
@@ -67,16 +74,17 @@ const NewTransactioCryptoPage = () => {
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="w-full">
-          <div className="w-full flex flex-row justify-between mt-4">
+          <div className="w-full flex flex-row justify-between mt-4 items-center">
             <p className="font-bold">Criptomoneda o Token: </p>
             <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-              <p className="font-bold">bitcoin</p>
+              <img src={iconBtc} alt="bitcoin" className="w-[25px] h-[25px]" />
+              <p className="font-bold">ckBTC</p>
             </div>
           </div>
-          <div className="w-full flex flex-row justify-between mt-4 mb-4" >
+          <div className="w-full flex flex-row justify-between mt-4 mb-4 items-center" >
             <p className="font-bold">Red: </p>
             <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
-              <p className="font-bold">ckbitcoin</p>
+              <p className="font-bold">ICP</p>
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,9 +101,34 @@ const NewTransactioCryptoPage = () => {
                 <span className='cursor-pointer absolute left-1 top-2 bottom-0 text-purple font-bold mr-20'>MAX</span>
               </div>
             </div>
-
-            <div className="w-full flex flex-row justify-end mt-1 mb-10" >
+            <div className="w-full flex flex-row justify-end mt-1 mb-5" >
               <span className="text-grayBold m-0"><strong className="mr-10">Disponible:</strong>   {'0.30 bitcoin'}</span>
+            </div>
+            <div className="w-full h-24  flex flex-col items-start">
+              <p className="font-bold">Dirección de destino: </p>
+              <textarea className="inputTextArea text-start" placeholder='' {...register('wallet',
+                {
+                  required: {
+                    value: true,
+                    message: "Ingresa un monto valido"
+                  },
+                })} />
+              {errors.wallet && <span className="errorTxt">{errors.wallet.message}</span>}
+            </div>
+            <div className="w-full mt-7 flex flex-col items-start">
+              <span className="text-xs text-start">Revisa siempre que la dirección sea de <strong>misma red</strong>  en dónde está tu criptomoneda o token a enviar.</span>
+            </div>
+            <div className="w-full flex flex-row justify-end mt-1 mb-5" >
+              <span className="text-grayBold m-0"><strong className="mr-10">Comisión:</strong>   {'0.0 ckBTC'}</span>
+            </div>
+            <div className="w-full flex flex-row justify-between mt-6 mb-4 items-center" >
+              <p className="font-bold">Monto a recibir: </p>
+              <div className="bg-grayLow flex flex-row p-2 rounded-lg gap-2">
+                <p className="font-bold">0.0</p>
+                <img src={iconBtc} alt="bitcoin" className="w-[25px] h-[25px]" />
+                <p className="font-bold">ckBTC</p>
+
+              </div>
             </div>
             <ButtonPrimary type="submit" name="Enviar" status={statusbutton} onClick={() => { }} />
           </form>
