@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import ButtonPrimary from "../../components/buttonPrimary";
 import { useState, useEffect } from "react";
@@ -62,7 +63,8 @@ const NewTransactionPage = () => {
   }, [amountWatched]);
 
   const saveDataConvertion = async ( response:any ) =>{
-    setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
+    const value = getValues('amount').toString(); 
+    setConvert(new ConvertModel(convert.from_currency, convert.network, value, response.totalMostrar, response.comision))
     const objectData = JSON.stringify(response);
     localStorage.setItem(lsConversionData, objectData);
   } 
@@ -74,15 +76,15 @@ const NewTransactionPage = () => {
       const response = await TransactionService.initialConvertion(request);
       saveDataConvertion(response)
       setStatusButton(StatusButton.Enabled)
-      navigate(routesNamesApp.qrTransaction)
+      // navigate(routesNamesApp.qrTransaction)
 
     }catch(e){
       if (e && typeof e === 'object' && 'message' in e && e.message === '500 INTERNAL SERVER ERROR'){
         const response = { comision:0.34, montoSuarmy:0.0, totalMostrar:0.023}
         saveDataConvertion(response)
-        saveDataConvertion(response)
         setStatusButton(StatusButton.Enabled)
-        navigate(routesNamesApp.qrTransaction)
+        return
+        // navigate(routesNamesApp.qrTransaction)
       }
       setStatusButton(StatusButton.Disabled)
       handleErrors(e)
@@ -98,15 +100,15 @@ const NewTransactionPage = () => {
 
   const onSubmit = async () => {
     try{
-      setStatusButton(StatusButton.Loading)
-      const value =parseInt(getValues('amount').toString()); 
-      const request = new RequestInitialConvertionModel(convert.from_currency, convert.network, value);
-      const response = await TransactionService.initialConvertion(request);
-      setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
-      const objectData = JSON.stringify(response);
-      localStorage.setItem(lsConversionData, objectData);
+      // setStatusButton(StatusButton.Loading)
+      // const value =parseInt(getValues('amount').toString()); 
+      // const request = new RequestInitialConvertionModel(convert.from_currency, convert.network, value);
+      // const response = await TransactionService.initialConvertion(request);
+      // setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
+      // const objectData = JSON.stringify(response);
+      // localStorage.setItem(lsConversionData, objectData);
       navigate(routesNamesApp.qrTransaction)
-      setStatusButton(StatusButton.Enabled)
+      // setStatusButton(StatusButton.Enabled)
 
     }catch(e){
       setStatusButton(StatusButton.Enabled)
