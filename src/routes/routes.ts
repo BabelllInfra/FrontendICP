@@ -1,8 +1,8 @@
 export const routesNames = {
   init: '/',
-  messageWarningTransaction: 'message-new-transaction/',
-  messageSuccessTransaction: 'message-success-transaction/',
-  messageSuccessSendCrypto: 'message-success-send-crypto/',
+  messageWarningTransaction: '/message-new-transaction/',
+  messageSuccessTransaction: '/message-success-transaction/',
+  messageSuccessSendCrypto: '/message-success-send-crypto/',
 }
 
 

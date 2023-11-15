@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import warning from "../../assets/images/warning.png";
+import iconWallet from "../../assets/images/wallet_bitcoin.webp";
 
 import { CloseButton } from "../../components/closebutton";
 import ButtonPrimary from "../../components/buttonPrimary";
@@ -12,17 +12,14 @@ const MessageSuccessSendCrypto = () => {
   return (
     <div className="bg-splash h-screen relative h-screen w-screen overflow-auto">
       <div className=" h-full flex w-full flex-col items-center justify-start">
-        <CloseButton onClick={() => navigate(-1)} />
+        <CloseButton onClick={() => navigate(routesNamesApp.qrTransaction)} />
         <div className="w-full px-10 lg:w-2/6">
 
           <h1 className="splashTxt mt-[50px]">
-            ¿Deseas continuar?
+            ¡Envio exitoso!
           </h1>
-          <p className="splashTxtSecond mb-10 text-center">
-            El monto final que vas a recibir dependerá de la volatilidad al momento así como del tiempo que tardemos en recibir tu depósito.
-          </p>
-          <img src={warning} className=" ml-auto mr-auto"></img>
-          <ButtonPrimary type="button" name="Continuar" status={StatusButton.Enabled} onClick={() => navigate(routesNamesApp.qrTransaction)} />
+          <img src={iconWallet} className=" ml-auto mr-auto my-20"></img>
+          <ButtonPrimary type="button" name="Regresar" status={StatusButton.Enabled} onClick={() => navigate(routesNamesApp.qrTransaction)} />
         </div>
       </div>
 
