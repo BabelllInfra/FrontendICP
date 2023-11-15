@@ -20,6 +20,8 @@ const QrTransactionPage = () => {
   const [progressPorcentage, setProgressPorcentage] = useState(0);
   const operation = 100 / 30;
   const [statusRequestInterval, setRequestInterval] = useState(false);
+  const [execute, setExecute] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate()
   //=============  INIT ============= 
@@ -42,18 +44,28 @@ const QrTransactionPage = () => {
       setQr(fullImage + response.imgBase64?.toString());
       const convert = new ConvertModel('ckBTC', 'ICP', dataObject?.montoPesos, dataObject.totalMostrar, dataObject.comision)
       setConvert(convert)
-      await TransactionService.newTransaction();
-      navigate(routesNames.messageSuccessTransaction)
+      if(execute===false){
+        console.log('============== START TRANSACTION ============== ')
+        const response = await TransactionService.newTransaction();
+        setExecute(true)
+        console.log('============== START TRANSACTION RESPONSE ==============: ' +response.status)
+        if(response.status === 200){
+          navigate(routesNames.messageSuccessTransaction)
+        }
+        
+      }
+      
     }
     catch(e){
       handleErrors(e)
+      console.error(e)
     }
     
   }
   useEffect(() => {
     init();
     // repeat();
-  }, []);
+  }, [execute]);
 
   //=============  INIT ============= 
 

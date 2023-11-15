@@ -43,7 +43,7 @@ const getQrBase64 = async ( request:string ) => {
 const newTransaction = async () => {
   try {
     const response = await instanceICP.get(`/transaccion/`)
-    return response.data
+    return response
   } catch (e) {
     if (e instanceof AxiosError) {
       let message = e.toString()
