@@ -13,7 +13,7 @@
 @layer components {
   
   .titleTxt{
-      @apply text-3xl font-bold text-grayBold text-center my-0 px-0;
+    @apply text-2xl font-bold text-grayBold text-center my-0 px-0;
   }
   .splashTxt{
     @apply text-3xl font-bold text-globalWhite text-center my-5 px-5;
@@ -192,6 +192,7 @@
 .container-side-main{
   @apply bg-purple w-full h-full
 }
+
 
 
 

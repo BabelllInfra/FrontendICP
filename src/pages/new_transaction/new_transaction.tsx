@@ -13,7 +13,7 @@ import TransactionService from "../../services/transaction_service";
 import { RequestInitialConvertionModel } from "../../models/request_initial_convertion_model";
 import useErrorHandling from "../../hooks/useError";
 import toast from "react-hot-toast";
-import { lsConversionData } from "../../common/constants/constants";
+// import { lsConversionData } from "../../common/constants/constants";
 
 /* eslint-disable no-case-declarations */
 const NewTransactionPage = () => {
@@ -66,7 +66,7 @@ const NewTransactionPage = () => {
     const value = getValues('amount').toString(); 
     setConvert(new ConvertModel(convert.from_currency, convert.network, value, response.totalMostrar, response.comision))
     const objectData = JSON.stringify(response);
-    localStorage.setItem(lsConversionData, objectData);
+    // localStorage.setItem(lsConversionData, objectData);
   } 
   const getConvertion = async () =>{
     try{
@@ -107,7 +107,7 @@ const NewTransactionPage = () => {
       // setConvert(new ConvertModel(response.from_currency, response.to_currency, response.amount, response.network, response.to_address))
       // const objectData = JSON.stringify(response);
       // localStorage.setItem(lsConversionData, objectData);
-      navigate(routesNamesApp.qrTransaction)
+      // navigate(routesNamesApp.qrTransaction)
       // setStatusButton(StatusButton.Enabled)
 
     }catch(e){

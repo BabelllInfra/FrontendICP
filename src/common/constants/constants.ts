@@ -5,4 +5,5 @@ export const walletTo = import.meta.env.VITE_WALLET_TO
 export const walletFrom = import.meta.env.VITE_WALLET_FROM
 
 
-export const lsConversionData = 'lsConversionData';
+
+export const lsToken = 'lsToken'

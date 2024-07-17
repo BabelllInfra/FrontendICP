@@ -3,12 +3,13 @@ export const routesNames = {
   messageWarningTransaction: '/message-new-transaction/',
   messageSuccessTransaction: '/message-success-transaction/',
   messageSuccessSendCrypto: '/message-success-send-crypto/',
+  messageLogoutUser: '/confirm-logout/',
 }
 
 
 export const routesNamesApp = {
-  newTransaction: '/',
-  qrTransaction: '/qr/',
-  newTransactionCrypto: '/send-crypto/',
+  balance: '/',
+  deposit: '/deposit',
+  send: '/send',
 
 }
