@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import wallet from "../../assets/images/wallet_bitcoin.webp";
 
 import ButtonPrimary from "../../components/buttonPrimary";
 import StatusButton from "../../models/button_status_enum";
-import { routesNamesApp } from "../../routes/routes";
 import { useForm } from "react-hook-form";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
@@ -12,7 +10,7 @@ import Navbar from "../../components/navbar";
 import toast, { Toaster } from "react-hot-toast";
 
 const MessageWarningTransaction = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   //=============  REACT FORM ============= 
   type FormValues = {
     email: string,
@@ -37,7 +35,7 @@ const MessageWarningTransaction = () => {
   //=============  INIT ============= 
   const onSubmit = () => {
     toast.success('CORREO ENVIADO EXITOSAMENTE')
-    navigate(routesNamesApp.newTransaction);
+    // navigate(routesNamesApp.newTransaction);
   }
 
   return (
@@ -72,7 +70,7 @@ const MessageWarningTransaction = () => {
 
             </div>
             <ButtonPrimary type="submit" name="Enviar" status={StatusButton.Enabled} onClick={()=>{}}/>
-            <a className="textButtonBlack" onClick={()=>navigate(routesNamesApp.newTransaction)}>Omitir</a>
+            <a className="textButtonBlack" onClick={()=>{}}>Omitir</a>
           </form>
         </div>
       </div>

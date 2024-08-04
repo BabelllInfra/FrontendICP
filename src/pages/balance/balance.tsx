@@ -1,25 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import StatusButton from "../../models/button_status_enum";
+// import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import useErrorHandling from "../../hooks/useError";
+// import { useNavigate } from "react-router";
+// import useErrorHandling from "../../hooks/useError";
 import iconCk from "../../assets/images/ckBTC-token.png"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 /* eslint-disable no-case-declarations */
 const BalancePage = () => {
   const backgroundImageUrl = 'icp_balance_background.png';
   const [user, setNameData] = useState('user');
-  const { errorMessage, handleErrors, clearErrorMessage } = useErrorHandling()
-  const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
+  // const { errorMessage, handleErrors, clearErrorMessage } = useErrorHandling()
+  // const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const { loginWithRedirect } = useAuth0();
   //=============  INIT ============= 
   const init = async () => {
     dispatch(ChangeIsBack({
       isBack: false,
     }))
+    setNameData('sasad')
   }
   useEffect(() => {
     init();

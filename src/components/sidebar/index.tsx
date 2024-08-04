@@ -3,13 +3,13 @@ import { motion } from 'framer-motion'
 import { changeVisible } from '../../redux/mainSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import useNavigateMain from '../../hooks/useNavigateMain';
-import { lsToken } from '../../common/constants/constants';
+// import { lsToken } from '../../common/constants/constants';
 
 
 const SidebarCustom = () => {
     const dispatch = useDispatch();
     // const navigate = useNavigate();
-    const token = localStorage.getItem(lsToken) ?? ''
+    // const token = localStorage.getItem(lsToken) ?? ''
     const { validateAndValidatePage } = useNavigateMain()
 
     const visible = useSelector((state: any) => state.main.visible)

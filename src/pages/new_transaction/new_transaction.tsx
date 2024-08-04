@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import StatusButton from "../../models/button_status_enum";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { routesNamesApp } from "../../routes/routes";
 import iconBtc from "../../assets/images/ckBTC-token.png";
 import { ConvertModel } from "../../models/convert_model";
 import TransactionService from "../../services/transaction_service";
@@ -31,7 +29,7 @@ const NewTransactionPage = () => {
 
   const [statusbutton, setStatusButton] = useState(StatusButton.Disabled);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   //=============  INIT ============= 
   const init = async () => {
     dispatch(ChangeIsBack({
@@ -65,7 +63,7 @@ const NewTransactionPage = () => {
   const saveDataConvertion = async ( response:any ) =>{
     const value = getValues('amount').toString(); 
     setConvert(new ConvertModel(convert.from_currency, convert.network, value, response.totalMostrar, response.comision))
-    const objectData = JSON.stringify(response);
+    // const objectData = JSON.stringify(response);
     // localStorage.setItem(lsConversionData, objectData);
   } 
   const getConvertion = async () =>{

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ChangeIsBack } from "../../redux/mainSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { lsConversionData, walletFrom } from "../../common/constants/constants";
+import { walletFrom } from "../../common/constants/constants";
 import { ConvertModel } from "../../models/convert_model";
 import logoAnimated from "../../assets/animations/swaphix_logo_animated.gif";
 import ProgressBar from "../../components/progressBar";
@@ -19,7 +19,7 @@ const QrTransactionPage = () => {
 
   const [progressPorcentage, setProgressPorcentage] = useState(0);
   const operation = 100 / 30;
-  const [statusRequestInterval, setRequestInterval] = useState(false);
+  const [statusRequestInterval] = useState(false);
   const [execute, setExecute] = useState(false);
 
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const QrTransactionPage = () => {
       isBack: false,
     }))
     try{
-      const data = localStorage.getItem(lsConversionData) ?? ''
+      const data = ''
       const dataObject = JSON.parse(data);
       const response = await TransactionService.getQrBase64(walletFrom);
       const fullImage = 'data:image/png;base64,'
